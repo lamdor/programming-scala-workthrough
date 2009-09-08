@@ -1,5 +1,3 @@
 class Upper {
-  def upper(strings:String*) = {
-    strings.map(_.toUpperCase)
-  }
+  def upper(strings:String*) = strings.map(_.toUpperCase)
 }
