@@ -3,7 +3,7 @@ object CountTo {
     var result = List[Int]()
     def count(i: Int): Unit = {
       if (i > 0) {
-        result = i :: result
+        result ::= i
         count(i - 1)
       }
     }
