@@ -21,9 +21,27 @@ object OptionSomeNoneSpecification extends Specification {
   stateCapitals.get("Alabama") must beSome[String]
   stateCapitals.get("Alaska") must beSome[String].which(_ == "Juneau")
 
+  stateCapitals.get("Iowa") must_== None
+  stateCapitals.get("Iowa") must beNone
+  // stateCapitals.get("Iowa").get must_== None // java.util.NoSuchElementException: None.get
+
   stateCapitals.get("Iowa").getOrElse("Des Moines") must_== "Des Moines"
   stateCapitals.getOrElse("Iowa", "Des Moines") must_== "Des Moines"
 
   stateCapitals.get("Alabama").getOrElse("Unknown") must_== "Montgomery"
   stateCapitals.getOrElse("Alabama", "Unknown") must_== "Montgomery"
+
+  "functions can return an Option" in {
+    // def maybeReturnIt(n: Int): Option[String] = {
+    // or (Scala can figure it out)
+    def maybeReturnIt(n: Int) = {
+      if (n >= 5)
+        Some("it")
+      else
+        None
+    }
+
+    maybeReturnIt(3) must beNone
+    maybeReturnIt(5).get must_== "it"
+  }
 }
