@@ -12,3 +12,15 @@ object StringUtilSpecification extends Specification {
     StringUtils.joiner(List("A", "B", "C")) must beEqualTo("A B C")
   }
 }
+
+
+object FactorialSpecification extends Specification {
+  import Factorial._
+  "factorial should compute the factorial" in {
+    factorial(0) must beEqualTo(1)
+    factorial(1) must beEqualTo(1)
+    factorial(2) must beEqualTo(2)
+    factorial(3) must beEqualTo(6)
+    factorial(4) must beEqualTo(24)
+  }
+}
