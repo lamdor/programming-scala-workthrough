@@ -95,7 +95,6 @@ class StringUtilsToCollectionSpecificationTest extends JUnit4(StringUtilsToColle
 object StringUtilsToCollectionSpecification extends Specification {
   "should split a string apart" in {
     val result = StringUtils.toCollection("this is a string")
-    result foreach { x => println(x)}
     result.length must beEqualTo(4)
     result(0) must beEqualTo("this")
     result(1) must beEqualTo("is")
