@@ -14,6 +14,8 @@ object StringUtilSpecification extends Specification {
 }
 
 
+class FactorialSpecificationTest extends JUnit4(FactorialSpecification)
+
 object FactorialSpecification extends Specification {
   import Factorial._
   "factorial should compute the factorial" in {
