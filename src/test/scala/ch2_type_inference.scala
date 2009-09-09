@@ -102,3 +102,14 @@ object StringUtilsToCollectionSpecification extends Specification {
     result(3) must beEqualTo("string")
   }
 }
+
+class MapToNothingSpecificationTest extends JUnit4(MapToNothingSpecification)
+
+object MapToNothingSpecification extends Specification {
+  "should not allow things to be added to it" in {
+    val map = Map()
+    // map.put("abc", 1) // value put is not a member of scala.collection.immutable.Map[Nothing,Nothing]
+
+    map must beEqualTo(Map[Nothing, Nothing]())
+  }
+}
