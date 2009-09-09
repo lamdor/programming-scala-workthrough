@@ -37,4 +37,18 @@ package shapes {
     }
   }
 
+  object ShapeMain {
+    def main(args: Array[String]) = {
+      ShapeDrawingActor.start()
+
+      ShapeDrawingActor ! new Circle(new Point(2.0, 3.0), 2.0)
+      ShapeDrawingActor ! new Rectangle(new Point(1.0, 2.0), 3.0, 4.0)
+      ShapeDrawingActor ! new Triangle(new Point(1.0, 2.0), new Point(3.0, 4.0), new Point(5.0, 6.0))
+
+      ShapeDrawingActor ! "something"
+
+      ShapeDrawingActor ! "exit"
+    }
+  }
+
 }
