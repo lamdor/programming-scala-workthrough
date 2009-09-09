@@ -41,4 +41,10 @@ object LiteralsSpecification extends Specification {
 
     string3
   }
+
+  "should be able to do symbol literals" in {
+    val something = 'something
+    val something2 = scala.Symbol("Programming Scala")
+    something
+  }
 }
