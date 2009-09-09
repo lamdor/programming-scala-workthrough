@@ -26,3 +26,11 @@ object FactorialSpecification extends Specification {
     factorial(4) must beEqualTo(24)
   }
 }
+
+class CountToSpecificationTest extends JUnit4(CountToSpecification)
+
+object CountToSpecification extends Specification {
+  "countTo should return a range up to the number" in {
+    CountTo.countTo(5) must beEqualTo(List(1,2,3,4,5))
+  }
+}
