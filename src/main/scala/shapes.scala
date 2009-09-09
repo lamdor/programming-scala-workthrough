@@ -22,4 +22,19 @@ package shapes {
     override def toString() = "Triangle(" + point1 + ", " + point2 + ", " + point3 + ")"
   }
 
+  import scala.actors._
+  import scala.actors.Actor._
+
+  object ShapeDrawingActor extends Actor {
+    def act() {
+      loop {
+        receive {
+          case s: Shape => s.draw()
+          case "exit" => println("Exiting..."); exit
+          case x: Any => println("Error! Unknown message: " + x)
+        }
+      }
+    }
+  }
+
 }
