@@ -88,6 +88,15 @@ object TypeInferenceSpecification extends Specification {
     val someList: List[String] = makeList()
     someList must beEqualTo(List())
   }
+
+  "should return Unit (void/nil) if it is a procedure (with side effects)" in {
+    def double(i: Int) { 2 * i }
+    double(2) must beEqualTo(())
+
+    // notice now the equals sign
+    def double2(i: Int) = { 2 * i }
+    double2(2) must beEqualTo(4)
+  }
 }
 
 class StringUtilsToCollectionSpecificationTest extends JUnit4(StringUtilsToCollectionSpecification)
