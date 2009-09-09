@@ -20,4 +20,72 @@ object TypeInferenceSpecification extends Specification {
     intToStringMap.put(3, "hello")
     intToStringMap.get(3) must beEqualTo("hello")
   }
+
+  "should need a type for a val/var unless it is assigned" in {
+    // val something
+    val something: String = null
+    something must beNull
+
+    val something2 = "abcd"
+    something2 must beEqualTo("abcd")
+  }
+
+  "should always need a type for parameters" in {
+    // def upcase(s) = s.toUpperCase
+    def upcase(s: String) = s.toUpperCase()
+    upcase("") must beEqualTo("")
+    upcase("aBCd") must beEqualTo("ABCD")
+  }
+
+  "should need a return type if explicitly calling return" in {
+    //def upcase(s: String) = {
+    def upcase(s: String): String = {
+      if (s.length == 0)
+        return ""
+      else
+        s.toUpperCase()
+    }
+    upcase("") must beEqualTo("")
+    upcase("aBCd") must beEqualTo("ABCD")
+  }
+
+  "should need a return type if the method is recursive" in {
+    def factorial(i: Int) = {
+      // def fact(i: Int, accumulator: Int) = {
+      def fact(i: Int, accumulator: Int): Int = {
+        if (i <= 1)
+          accumulator
+        else
+          fact(i - 1, i * accumulator)
+      }
+      fact(i, 1)
+    }
+    factorial(3) must beEqualTo(6)
+  }
+
+  "should need a return type if the method is overloaded (calling method needs return type)" in {
+    object Joiner {
+      def joiner(strings: List[String], separator: String) = strings.mkString(separator)
+      // def joiner(strings: List[String]) = joiner(strings, " ")
+      def joiner(strings: List[String]): String = joiner(strings, " ")
+    }
+
+    Joiner.joiner(List("a", "b", "c"), ",") must beEqualTo("a,b,c")
+    Joiner.joiner(List("a", "b", "c")) must beEqualTo("a b c")
+  }
+
+  "should need a return type when the type needs to be more general" in {
+    def makeList(strings: String*) = {
+      if (strings.length == 0)
+        List()
+      else
+        strings.toList
+    }
+
+    makeList() must beEqualTo(List())
+    makeList("a", "b", "c") must beEqualTo(List("a", "b", "c"))
+
+    val someList: List[String] = makeList()
+    someList must beEqualTo(List())
+  }
 }
