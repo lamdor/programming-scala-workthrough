@@ -13,6 +13,28 @@ object PatternMatchingSpecification extends Specification {
       }
     }
 
+    "be able to be used to determine return values in a function" >> {
+      def headOrTails(bool: Boolean) = {
+        bool match {
+          case true => "heads"
+          case false => "tails"
+          case _ => "what is this?"
+        }
+      }
+
+      headOrTails(true) must_== "heads"
+      headOrTails(false) must_== "tails"
+
+      // or a more succicent function definition
+      def headOrTails2(bool: Boolean) = bool match {
+        case true => "heads"
+        case false => "tails"
+      }
+
+      headOrTails2(true) must_== "heads"
+      headOrTails2(false) must_== "tails"
+    }
+
     "be able to use variables in the matching expression" >> {
       import scala.util.Random
 
@@ -72,9 +94,9 @@ object PatternMatchingSpecification extends Specification {
           for (tup <- List(tupA, tupB)) {
             tup match {
               case (thingOne, thingTwo) if thingOne == "Good" =>
-                println("A two-tuple starting with 'Good'")
+              println("A two-tuple starting with 'Good'")
               case (thingOne, thingTwo) =>
-                println("This has two things: " + thingOne + " and " + thingTwo)
+              println("This has two things: " + thingOne + " and " + thingTwo)
             }
           }
     }
@@ -90,7 +112,7 @@ object PatternMatchingSpecification extends Specification {
         case Person("Alice", 25) => println("Hi Alice!")
         case Person("Bob", 32) => println("Hey Bob.")
         case Person(name, age) =>
-          println("Who are you, a " + age + " old person named " + name)
+        println("Who are you, a " + age + " old person named " + name)
       }
     }
 
@@ -106,9 +128,9 @@ object PatternMatchingSpecification extends Specification {
 
       for (item <- catalog) item match {
         case BookExtractorRE(title, authors) =>
-          println("Book \"" + title + "\" written by " + authors)
+        println("Book \"" + title + "\" written by " + authors)
         case MagazineExtractorRE(title, issue) =>
-          println("Magazine \"" + title + "\" published in " + issue)
+        println("Magazine \"" + title + "\" published in " + issue)
         case entry => println("Unrecognized entry - " + entry)
       }
     }
@@ -126,9 +148,9 @@ object PatternMatchingSpecification extends Specification {
 
       for (item <- Map(1 -> alice, 2 -> bob, 3 -> charlie)) item match {
         case (id, p @ Person(_, _, Manager)) =>
-          format("%s is overpaid.\n", p)
+        format("%s is overpaid.\n", p)
         case (id, p @ Person(_, _, _)) =>
-          format("%s is underpaid.\n", p)
+        format("%s is underpaid.\n", p)
       }
 
       // could also be written
