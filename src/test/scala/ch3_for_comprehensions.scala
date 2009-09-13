@@ -49,5 +49,12 @@ object ForComprehensionSpecification extends Specification {
                               } yield upcasedBreed
       filteredBreeds must beEqualTo(List("YORKSHIRE TERRIER", "SCOTTISH TERRIER"))
     }
+
+    "iterate through multiple lists" >> {
+      for (x <- 1 to 5; y <- 1 to 3) {
+        println("x=" + x + "; y=" + y)
+      }
+    }
+
   }
 }
