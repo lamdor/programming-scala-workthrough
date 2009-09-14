@@ -43,3 +43,28 @@ trait VetoableClicks extends Clickable {
     count = 0
   }
 }
+
+class ButtonWithCallbacks(val label: String, val clickedCallbacks: List[() => Unit]) extends Widget {
+
+  require(clickedCallbacks != null, "Callback list cannot be null")
+
+  def this(label: String, clickedCallback: () => Unit) =
+    this(label, List(clickedCallback))
+
+  def this(label: String) = {
+    this(label, Nil)
+    println("Warning.. no callback")
+  }
+
+  def click() = {
+    // pretend to click
+    clickedCallbacks.foreach(f => f())
+  }
+}
+
+class RadioButtonWithCallbacks(var on: Boolean, label: String, clickCallbacks: List[() => Unit]) extends ButtonWithCallbacks(label, clickCallbacks) {
+
+  def this(on: Boolean, label: String, clickCallback: () => Unit) = this(on, label, List(clickCallback))
+
+  def this(on: Boolean, label: String) = this(on, label, Nil)
+}

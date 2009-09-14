@@ -4,24 +4,6 @@ import ui._
 object ConstructorsSpecification extends Specification {
   "Scala classes" should {
     "allow overloaded constructors" >> {
-      class ButtonWithCallbacks(val label: String, val clickedCallbacks: List[() => Unit]) extends Widget {
-
-        require(clickedCallbacks != null, "Callback list cannot be null")
-
-        def this(label: String, clickedCallback: () => Unit) =
-          this(label, List(clickedCallback))
-
-        def this(label: String) = {
-          this(label, Nil)
-          println("Warning.. no callback")
-        }
-
-        def click() = {
-          // pretend to click
-          clickedCallbacks.foreach(f => f())
-        }
-      }
-
       val nullList: List[() => Unit] = null
       (new ButtonWithCallbacks("hello", nullList)) must throwA(new IllegalArgumentException("requirement failed: Callback list cannot be null"))
 
@@ -42,6 +24,13 @@ object ConstructorsSpecification extends Specification {
                                                                 ))
       buttonWithMultipleCallbacks.click
       count must_== 3
+    }
+
+    "should be able to call the super classes constructor" >> {
+      var clicked = false
+      val radioButton = new RadioButtonWithCallbacks(false, "Hello", () => clicked = true)
+      radioButton.click
+      clicked must beTrue
     }
   }
 }
