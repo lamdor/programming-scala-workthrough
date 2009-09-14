@@ -86,4 +86,15 @@ object TraitsSpecification extends Specification {
     }
   }
 
+  "VetoableClicks" should {
+    "allow a maximum number of clicks" in {
+      val button = new Button("Okay") with ObservableClicks with VetoableClicks
+      val buttonClickObserver = new ButtonClickObserver
+      button.addObserver(buttonClickObserver)
+
+      for (i <- 1 to 3) button.click
+      buttonClickObserver.count must_== 1
+    }
+  }
+
 }
