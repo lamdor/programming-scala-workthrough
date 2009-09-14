@@ -4,9 +4,20 @@ import observer._
 
 abstract class Widget
 
-class Button(label: String) extends Widget {
+trait Clickable {
+  def click()
+}
+
+class Button(label: String) extends Widget with Clickable {
   def click() = {
     // logic to do some clicking stuff...
+  }
+}
+
+trait ObservableClicks extends Clickable with Subject {
+  abstract override def click() {
+    super.click
+    notifyObservers
   }
 }
 

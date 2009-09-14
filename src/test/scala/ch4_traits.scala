@@ -75,6 +75,15 @@ object TraitsSpecification extends Specification {
       for (i <- 1 to 3) button.click
       buttonClickObserver.count must_== 3
     }
+
+    "be able to be applied anonymously" in {
+      val button = new Button("Okay") with ObservableClicks
+      val buttonClickObserver = new ButtonClickObserver
+      button.addObserver(buttonClickObserver)
+
+      for (i <- 1 to 3) button.click
+      buttonClickObserver.count must_== 3
+    }
   }
 
 }
