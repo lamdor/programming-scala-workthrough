@@ -121,6 +121,19 @@ object TraitsSpecification extends Specification {
       for (i <- 1 to 3) button.click
       buttonClickObserver.count must_== 1
     }
+
+    "be able to be reset" in {
+      val button = new Button("Okay") with ObservableClicks with VetoableClicks
+      val buttonClickObserver = new ButtonClickObserver
+      button.addObserver(buttonClickObserver)
+
+      for (i <- 1 to 3) button.click
+      buttonClickObserver.count must_== 1
+
+      button.reset
+      for (i <- 1 to 3) button.click
+      buttonClickObserver.count must_== 2
+    }
   }
 
 }

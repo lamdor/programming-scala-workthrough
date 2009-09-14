@@ -38,4 +38,8 @@ trait VetoableClicks extends Clickable {
       count += 1
     }
   }
+
+  def reset() = {
+    count = 0
+  }
 }
