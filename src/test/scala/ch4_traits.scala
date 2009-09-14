@@ -42,5 +42,22 @@ object TraitsSpecification extends Specification {
       button.click
       testObserver.called must beTrue
     }
+
+    "keep notifying observers on every click" in {
+      val button = new ObservableButton("hello")
+      class ButtonClickObserver {
+        var count = 0
+        def receiveUpdate(button:Any) = count += 1
+      }
+      val buttonClickObserver = new ButtonClickObserver
+      button.addObserver(buttonClickObserver)
+
+      button.click
+      buttonClickObserver.count must_== 1
+
+      button.click
+      buttonClickObserver.count must_== 2
+    }
   }
+
 }
