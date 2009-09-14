@@ -177,5 +177,26 @@ object PatternMatchingSpecification extends Specification {
         println("It all worked")
       }
     }
+
+    "be able to create simple regex translation functions" >> {
+      trait Publication
+      case class Book(val title: String, val authors: String) extends Publication
+      case class Magazine(val title: String, val issue: String) extends Publication
+
+      val catalog = List("Book: title=Programming Scala, authors=Dean Wampler, Alex Payne",
+                         "Magazine: title=The New Yorker, issue=January 2009",
+                         "Book: title=War and Peace, authors=Leo Tolstoy",
+                         "Magazine: title=The Atlantic, issue=February 2009")
+
+      val BookExtractorRE = """Book: title=([^,]+),\s+authors=(.+)""".r
+      val MagazineExtractorRE = """Magazine: title=([^,]+),\s+issue=(.+)""".r
+
+      def convertStringToObj(line: String) = line match {
+        case BookExtractorRE(title, authors) => new Book(title, authors)
+        case MagazineExtractorRE(title, issue) => new Magazine(title, issue)
+      }
+
+      println(catalog.map(convertStringToObj))
+    }
   }
 }
