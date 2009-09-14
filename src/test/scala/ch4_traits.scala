@@ -16,6 +16,11 @@ object TraitsSpecification extends Specification {
     def receiveUpdate(subject: Any) = called = true
   }
 
+  class ButtonClickObserver {
+    var count = 0
+    def receiveUpdate(button:Any) = count += 1
+  }
+
   "Subject" should {
     "notify observers" in {
       class TestSubject extends Subject {
@@ -45,10 +50,6 @@ object TraitsSpecification extends Specification {
 
     "keep notifying observers on every click" in {
       val button = new ObservableButton("hello")
-      class ButtonClickObserver {
-        var count = 0
-        def receiveUpdate(button:Any) = count += 1
-      }
       val buttonClickObserver = new ButtonClickObserver
       button.addObserver(buttonClickObserver)
 
@@ -57,6 +58,22 @@ object TraitsSpecification extends Specification {
 
       button.click
       buttonClickObserver.count must_== 2
+    }
+  }
+
+  "Scala traits" should {
+    "be able to be applied to just an object" in {
+      val button = new Button("Okay") with Subject {
+        override def click() = {
+          super.click
+          notifyObservers
+        }
+      }
+      val buttonClickObserver = new ButtonClickObserver
+      button.addObserver(buttonClickObserver)
+
+      for (i <- 1 to 3) button.click
+      buttonClickObserver.count must_== 3
     }
   }
 
