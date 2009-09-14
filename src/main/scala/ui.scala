@@ -2,7 +2,22 @@ package ui
 
 import observer._
 
-abstract class Widget
+abstract class Widget {
+  class Properties {
+    import scala.collection.immutable.HashMap
+
+    private var values: Map[String, Any] = new HashMap
+
+    def size = values.size
+    def get(key: String) = values.get(key)
+    def update(key: String, value: Any) = {
+      // do some pre-processing
+      values = values.update(key, value)
+      // do some post-processing
+    }
+  }
+  val properties = new Properties
+}
 
 trait Clickable {
   def click()
