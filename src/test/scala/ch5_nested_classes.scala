@@ -4,7 +4,11 @@ import ui._
 object NestedClassesSpecification extends Specification {
   "Scala" should {
     "allow nested classes" >> {
-      class MyWidget extends Widget
+      class MyWidget extends Widget {
+        def draw() = {
+          // do drawing stuff
+        }
+      }
 
       val myWidget = new MyWidget
 

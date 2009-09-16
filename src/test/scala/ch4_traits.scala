@@ -16,10 +16,6 @@ object TraitsSpecification extends Specification {
     def receiveUpdate(subject: Any) = called = true
   }
 
-  class ButtonClickObserver {
-    var count = 0
-    def receiveUpdate(button:Any) = count += 1
-  }
 
   "Subject" should {
     "notify observers" in {

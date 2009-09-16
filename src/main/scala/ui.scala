@@ -17,6 +17,8 @@ abstract class Widget {
     }
   }
   val properties = new Properties
+  def draw(): Unit
+  override def toString(): String = "(widget)"
 }
 
 trait Clickable {
@@ -27,7 +29,12 @@ class Button(label: String) extends Widget with Clickable {
   def click() = {
     // logic to do some clicking stuff...
   }
+  def draw() = {
+    // do drawing stuff
+  }
+  override def toString() = "(button: label=" + label + ", " + super.toString +")"
 }
+
 
 trait ObservableClicks extends Clickable with Subject {
   abstract override def click() = {
@@ -35,6 +42,12 @@ trait ObservableClicks extends Clickable with Subject {
     notifyObservers
   }
 }
+
+class ButtonClickObserver {
+  var count = 0
+  def receiveUpdate(button:Any) = count += 1
+}
+
 
 class ObservableButton(label:String) extends Button(label) with Subject {
   override def click() = {
@@ -44,7 +57,7 @@ class ObservableButton(label:String) extends Button(label) with Subject {
 }
 
 trait VetoableClicks extends Clickable {
-  val maxAllowed = 1
+  var maxAllowed = 1
   private var count = 0
 
   abstract override def click() = {
@@ -74,6 +87,10 @@ class ButtonWithCallbacks(val label: String, val clickedCallbacks: List[() => Un
   def click() = {
     // pretend to click
     clickedCallbacks.foreach(f => f())
+  }
+
+  def draw() = {
+    // do drawing stuff...
   }
 }
 
