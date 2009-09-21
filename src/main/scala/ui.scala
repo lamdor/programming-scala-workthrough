@@ -21,11 +21,22 @@ abstract class Widget {
   override def toString(): String = "(widget)"
 }
 
+object Widget {
+  val ButtonExtractionRE = """\(button: label=([^,]*),\s+\(widget\)\)""".r
+  val TextFieldExtractionRE = """\(textfield: text=([^,]*),\s+\(widget\)\)""".r
+
+  def apply(specification: String): Option[Widget] = specification match {
+    case ButtonExtractionRE(label) => new Some(new Button(label))
+    case TextFieldExtractionRE(text) => new Some(new TextField(text))
+    case _ => None
+  }
+}
+
 trait Clickable {
   def click()
 }
 
-class Button(label: String) extends Widget with Clickable {
+class Button(val label: String) extends Widget with Clickable {
   def click() = {
     // logic to do some clicking stuff...
   }
@@ -33,6 +44,12 @@ class Button(label: String) extends Widget with Clickable {
     // do drawing stuff
   }
   override def toString() = "(button: label=" + label + ", " + super.toString +")"
+}
+
+class TextField(val text: String) extends Widget {
+  def draw() = {
+    // do drawning stuff
+  }
 }
 
 
