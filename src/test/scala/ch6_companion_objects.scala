@@ -37,4 +37,40 @@ object CompanionObjectsSpecification extends Specification {
       }
     }
   }
+
+  "Button companion object" should {
+    "have unapply method to aid with pattern matching" >> {
+      val b = new Button("Click me")
+      b match {
+        case Button(label) => label must_== "Click me"
+        case _ => fail("Did not match")
+      }
+
+      val rb = new RadioButton(false, "click me")
+      rb match {
+        case Button(label) => label must_== "click me"
+        case _ => fail("Did not match")
+      }
+
+      val tf = new TextField("some text")
+      tf match {
+        case Button(label) => fail("This isn't a button")
+        case _ => true
+      }
+    }
+  }
+
+  "RadioButton companion object" should {
+    "match a RadioButton object" >> {
+      val rb = new RadioButton(false, "click me")
+      rb match {
+        case RadioButton(on, label) => {
+          on must beFalse
+          label must_== "click me"
+        }
+        case _ => fail("did not match")
+      }
+    }
+  }
+
 }

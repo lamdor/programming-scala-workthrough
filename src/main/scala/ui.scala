@@ -46,6 +46,16 @@ class Button(val label: String) extends Widget with Clickable {
   override def toString() = "(button: label=" + label + ", " + super.toString +")"
 }
 
+class RadioButton(var on: Boolean, label: String) extends Button(label)
+
+object Button {
+  def unapply(button: Button) = Some(button.label)
+}
+
+object RadioButton {
+  def unapply(radioButton: RadioButton) = Some(radioButton.on, radioButton.label)
+}
+
 class TextField(val text: String) extends Widget {
   def draw() = {
     // do drawning stuff
