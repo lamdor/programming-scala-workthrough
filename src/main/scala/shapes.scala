@@ -1,25 +1,20 @@
 package shapes {
-  class Point(val x: Double, val y: Double) {
-    override def toString() = "Point(" + x + ", " + y +")"
-  }
+  case class Point(x: Double, y: Double)
 
   abstract class Shape() {
     def draw() : Unit
   }
 
-  class Circle(val center: Point, val radius: Double) extends Shape {
+  case class Circle(center: Point, radius: Double) extends Shape {
     def draw = println("Circle.draw: " + this)
-    override def toString() = "Circle(" + center + ", " + radius + ")"
   }
 
-  class Rectangle(val lowerLeft: Point, val height: Double, val width: Double) extends Shape {
+  case class Rectangle(lowerLeft: Point, height: Double, width: Double) extends Shape {
     def draw = println("Rectangle.draw: " + this)
-    override def toString() = "Rectangle(" + lowerLeft + ", " + height + ", " + width + ")"
   }
 
-  class Triangle(val point1: Point, val point2: Point, val point3: Point) extends Shape {
+  case class Triangle(point1: Point, point2: Point, point3: Point) extends Shape {
     def draw = println("Triangle.draw: " + this)
-    override def toString() = "Triangle(" + point1 + ", " + point2 + ", " + point3 + ")"
   }
 
   import scala.actors._
@@ -41,9 +36,9 @@ package shapes {
     def main(args: Array[String]) = {
       ShapeDrawingActor.start()
 
-      ShapeDrawingActor ! new Circle(new Point(2.0, 3.0), 2.0)
-      ShapeDrawingActor ! new Rectangle(new Point(1.0, 2.0), 3.0, 4.0)
-      ShapeDrawingActor ! new Triangle(new Point(1.0, 2.0), new Point(3.0, 4.0), new Point(5.0, 6.0))
+      ShapeDrawingActor ! Circle(Point(2.0, 3.0), 2.0)
+      ShapeDrawingActor ! Rectangle(Point(1.0, 2.0), 3.0, 4.0)
+      ShapeDrawingActor ! Triangle(Point(1.0, 2.0), Point(3.0, 4.0), Point(5.0, 6.0))
 
       ShapeDrawingActor ! "something"
 
