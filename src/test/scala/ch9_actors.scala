@@ -63,5 +63,12 @@ object ActorsSpecification extends Specification {
       countActor ! 4
       countActor ! "how many?"
     }
+
+    "support returning a function that evaluates the expression in the background" in {
+      import scala.actors.Futures._
+
+      val eventually = future(5 * 42)
+      eventually() must_== 210
+    }
   }
 }
