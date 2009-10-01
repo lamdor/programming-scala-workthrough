@@ -49,6 +49,12 @@ object ReadingXmlSpecification extends Specification {
         val condiments = someXML \ "condiment"
         condiments.isEmpty must beTrue
       }
+
+      """stack the \ """ in {
+        val condimentExpirations = someXML \ "condiments" \ "condiment"
+        condimentExpirations.size must beEqualTo(2)
+        condimentExpirations.map(_.text) must containAll(List("mayo", "mustard"))
+      }
     }
 
     """use \\ as a full breadth search""" in {
