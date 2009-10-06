@@ -38,5 +38,29 @@ object ImplicitsSpecification extends Specification {
       multipler(2) must_== 4
       multipler(2)(3) must_== 6
     }
+
+    "be able to use an implicit objects" in {
+      abstract class SemiGroup[A] {
+        def add(x: A, y: A): A
+      }
+      abstract class Monoid[A] extends SemiGroup[A] {
+        def unit: A
+      }
+      implicit object StringMonoid extends Monoid[String] {
+        def add(x: String, y: String) = x concat y
+        def unit = ""
+      }
+      implicit object IntMonoid extends Monoid[Int] {
+        def add(x: Int, y: Int) = x + y
+        def unit = 0
+      }
+      def sum[A](xs: List[A])(implicit m: Monoid[A]): A = {
+        if (xs.isEmpty) m.unit
+        else m.add(xs.head, sum(xs.tail))
+      }
+
+      sum(List(1,2,3)) mustEqual 6
+      sum(List("a", "b", "c")) mustEqual "abc"
+    }
   }
 }
