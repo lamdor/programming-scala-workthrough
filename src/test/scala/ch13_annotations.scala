@@ -51,30 +51,8 @@ object AnnotationsSpecification extends Specification {
 
   "the throws annotation" should {
     "clue the client to what exceptions a method could throw" in {
-      import java.io._
-
-      class FilePrinter(val file: File) {
-
-        @throws(classOf[IOException])
-        def print() = {
-          var reader: LineNumberReader = null
-          try {
-            reader = new LineNumberReader(new FileReader(file))
-            loop(reader)
-          } finally {
-            if (reader != null)
-              reader.close
-          }
-        }
-
-        private def loop(reader: LineNumberReader) {
-          val line = reader.readLine
-          if (line != null) {
-            format("%3d: %s\n", reader.getLineNumber, line)
-            loop(reader)
-          }
-        }
-      }
+      // see fileprinter.scala in main
+      import java.io.File
 
       val printer = new FilePrinter(new File("src/test/scala/ch13_annotations.scala"))
       printer.print()
