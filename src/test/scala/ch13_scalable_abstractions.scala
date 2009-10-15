@@ -47,11 +47,12 @@ object ScalableAbstractionSpecification extends Specification {
 
       val clicksObserver = new ButtonClicksObserver
 
-      buttons.foreach { b => b.addObserver(observer) }
+      buttons.foreach { b => b.addObserver(clicksObserver) }
 
       buttons.foreach(_.click)
 
       clicksObserver.clicks.getOrElse("Button 1", 0) mustEqual 2
+      clicksObserver.clicks.getOrElse("Button 2", 0) mustEqual 1
     }
   }
 }
