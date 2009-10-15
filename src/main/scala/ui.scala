@@ -127,3 +127,27 @@ class RadioButtonWithCallbacks(var on: Boolean, label: String, clickCallbacks: L
 
   def this(on: Boolean, label: String) = this(on, label, Nil)
 }
+
+import observerRevised._
+object ButtonSubjectObserver extends SubjectObserver {
+  type S = ObservableButton
+  type O = ButtonObserver
+
+  class ObservableButton(name: String) extends Button(name) with Subject {
+    override def click() = {
+      super.click
+      notifyObservers
+    }
+  }
+
+  trait ButtonObserver extends Observer
+}
+
+class ButtonClicksObserver extends ButtonSubjectObserver.ButtonObserver {
+  val clicks = new scala.collection.mutable.HashMap[String, Int]()
+
+  def receiveUpdate(button: ButtonSubjectObserver.ObservableButton) {
+    val count = clicks.getOrElse(button.label, 0) + 1
+    clicks.update(button.label, count)
+  }
+}
