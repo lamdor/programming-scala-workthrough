@@ -6,8 +6,8 @@ object ParameterizedTypesSpecification extends Specification {
       import scala.reflect.Manifest
       object WhichList {
         def apply[B](value: List[B])(implicit m: Manifest[B]) = m.toString match {
-          case "int" => "List[Int]"
-          case "double" => "List[Double]"
+          case "Int" => "List[Int]"
+          case "Double" => "List[Double]"
           case "java.lang.String" => "List[String]"
           case _ => "List[???]"
         }

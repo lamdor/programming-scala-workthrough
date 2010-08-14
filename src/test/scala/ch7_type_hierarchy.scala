@@ -26,7 +26,7 @@ object TypeHierarchySpecification extends Specification {
   "Iterable trait" should {
     "allow subclasses to iterate through" in {
       val myIterable = new Iterable[Int] {
-        def elements =  List(1,2,3).elements
+        def iterator =  List(1,2,3).iterator
       }
 
       myIterable.isEmpty must beFalse

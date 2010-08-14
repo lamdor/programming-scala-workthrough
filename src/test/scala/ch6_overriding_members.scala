@@ -31,7 +31,7 @@ object OverridingMembersSpecification extends Specification {
     }
   }
 
-  "Scala 2.7" should {
+  "Scala 2.8" should {
     "allow you to override superclass vals" >> {
       class S1 {
         val something = "abc"
@@ -43,7 +43,7 @@ object OverridingMembersSpecification extends Specification {
       sc1.something must_== "mine"
     }
 
-    "not complain if you override defaulted trait vals, but not follow through" >> {
+    "allow you to override trait vals" >> {
       trait T1 {
         val name = "T1"
       }
@@ -51,7 +51,7 @@ object OverridingMembersSpecification extends Specification {
         override val name = "ClassExtendsT1"
       }
       val cet1 = new ClassExtendsT1
-      cet1.name must_== "T1"
+      cet1.name must_== "ClassExtendsT1"
     }
 
     "allow you to override abstract trait vals" >> {

@@ -10,8 +10,4 @@ object AbstractTypeSpecification extends Specification {
       stringBulkReader.read must_== "Hello"
     }
   }
-
-  "FileBulkReader" should {
-    "read whole files..."
-  }
 }

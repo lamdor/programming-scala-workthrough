@@ -1,5 +1,6 @@
 package payroll.api
 
+import payroll._
 import payroll.Type2Money._
 
 object DeductionsCalculator {

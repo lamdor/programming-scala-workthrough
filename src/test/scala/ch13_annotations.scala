@@ -6,12 +6,12 @@ object AnnotationsSpecification extends Specification {
     class Person(
       @Pre("name != null && name.length() > 0")
       val name: String,
-      @Pre{val value = "age > 0", val message = "You're too young!"}
+      @Pre(value = "age > 0", message = "You're too young!")
       val age: Int
     )
 
     class SSN(
-      @Pre("valid(ssn)") { val message = "Format must be DDD-DD-DDDD"}
+      @Pre(value = "valid(ssn)", message = "Format must be DDD-DD-DDDD")
       val ssn: String) {
       private def valid(value: String) {
         value matches """^\s*\d{3}-\d{2}-\d{4}\s*$"""

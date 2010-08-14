@@ -1,10 +1,10 @@
 import org.specs._
 
 object ImplicitsSpecification extends Specification {
-  import scala.runtime.RichString
+  import scala.collection.immutable.StringOps
 
   "Scala implicits" should {
-    "already wrap the java.lang.String in a scala.runtime.RichString" in {
+    "already wrap the java.lang.String in a scala.collection.immutable.StringOps" in {
       val result: String = "scala".capitalize.reverse
       result must_== "alacS"
     }
@@ -12,11 +12,11 @@ object ImplicitsSpecification extends Specification {
     class FancyString(val str: String)
 
     "be able to wrap an instance in some wrapper" in {
-      object FancyString2RichString {
-        implicit def fancyString2RichString(f: FancyString) = new RichString(f.str)
+      object FancyString2StringOps {
+        implicit def fancyString2StringOps(f: FancyString) = new StringOps(f.str)
       }
 
-      import FancyString2RichString._
+      import FancyString2StringOps._
 
       val fs = new FancyString("abc")
       val result: String = fs.capitalize.reverse
@@ -24,7 +24,7 @@ object ImplicitsSpecification extends Specification {
     }
 
     "find the implicit function in the current scope" in {
-      implicit def fancyString2RichString(f: FancyString) = new RichString(f.str)
+      implicit def fancyString2StringOps(f: FancyString) = new StringOps(f.str)
       val fs = new FancyString("abc")
       val result: String = fs.capitalize.reverse
       result must_== "cbA"
